@@ -22,7 +22,8 @@ public:
 void readFromFile(string fileName);
 void randomize(vector<string> ppl);
 void print(vector<string>ppl);
-void outFileCSV(vector<string>ppl);
+void outFileHTML(vector<string>ppl);
+string hyperlink(string s);
 string date();
 private:
 vector<string> ppl; 

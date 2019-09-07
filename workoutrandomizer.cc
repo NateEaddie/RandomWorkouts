@@ -33,7 +33,7 @@ shuffle the vector indexes
     shuffle(ppl.begin()+1,ppl.end(),r2);
 
     print(ppl);
-    outFileCSV(ppl);
+    outFileHTML(ppl);
 }
 
 
@@ -49,20 +49,20 @@ void workout::print(vector<string>ppl){
 }
 
 /*
-Outputs the workout to a csv file, which is then immediately placed in a folder in the cloud
+Outputs the workout to a html file, which is then immediately placed in a folder in the cloud
  */
-void workout::outFileCSV(vector<string>ppl){
-    string s = date()+"-workout.csv";
+void workout::outFileHTML(vector<string>ppl){
+    string s = date()+"-workout.html";
     string path = "/Users/nate/Library/Mobile Documents/com~apple~CloudDocs/Documents/"+s;
     ofstream out;
     out.open(path);
     if(!out.is_open()){
         cout << "error opening file \n";
     }
-    out << ppl[0] <<endl;
+    out << hyperlink(ppl[0]) <<endl;
     //Arbitrary number chosen for limit
-    for(int i =1; i < 6;i++){
-       out << ppl[i] << endl;
+    for(int i =1; i < 7;i++){
+       out << hyperlink(ppl[i]) << endl;
     }
 
 }
@@ -76,4 +76,33 @@ string workout::date(){
     string today = to_string(now->tm_mon + 1) + "-" + to_string(now->tm_mday);
     return today; 
 
+}
+
+
+/* 
+Hyperlinks the workouts using html 
+*/
+string workout::hyperlink(string s){
+
+    
+    char check;
+    string s1;
+
+    //google link syntax
+    string link ="https://www.google.com/search?q=";
+
+    //Replaces spaces with "+" for google link in new string
+    for(int i =0;i<s.length();i++){
+        check = s[i];
+        if(isspace(check)){
+            check = '+';
+        }
+        s1 += check;
+    }
+
+    //combining the new string with some html
+    string hyper = link + s1;
+    string ref = "<h1><a href=\"" + hyper +"\">";
+    string href = ref + s + "</a></h1>";
+    return href;
 }
